@@ -11,7 +11,7 @@ Install the following tools before deploying:
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # Required tools
-brew install stow starship fzf eza
+brew install stow starship fzf eza zoxide
 ```
 
 ## Installation
