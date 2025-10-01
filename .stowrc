@@ -1,4 +1,7 @@
 --target=$HOME
 --verbose
---ignore=.stowrc
---ignore=DS_Store
+--ignore=^\.git
+--ignore=^\.gitignore
+--ignore=^\.stowrc
+--ignore=^README\.md
+--ignore=\.DS_Store

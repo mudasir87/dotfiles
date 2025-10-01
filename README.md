@@ -2,6 +2,16 @@
 
 Personal macOS configuration files managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
+## Structure
+
+This repository uses a **package-based structure** where each tool has its own directory:
+
+- `ssh/` - SSH client configuration
+- `zsh/` - Zsh shell configuration
+- `starship/` - Starship prompt configuration
+- `ghostty/` - Ghostty terminal configuration
+- `windsurf/` - Windsurf IDE settings
+
 ## Prerequisites
 
 Install the following tools before deploying:
@@ -22,12 +32,22 @@ brew install stow starship fzf eza zoxide
    cd ~/dotfiles
    ```
 
-2. **Deploy with Stow**:
+2. **Create SSH directory** (required for proper file-level symlinking):
    ```bash
-   stow .
+   mkdir -p ~/.ssh && chmod 700 ~/.ssh
    ```
 
-3. **Restart your shell**:
+3. **Deploy all packages**:
+   ```bash
+   stow */
+   ```
+
+   Or install specific packages:
+   ```bash
+   stow ssh zsh starship
+   ```
+
+4. **Restart your shell**:
    ```bash
    source ~/.zshrc
    ```
@@ -36,5 +56,15 @@ brew install stow starship fzf eza zoxide
 
 ```bash
 cd ~/dotfiles
-stow -D .
+# Uninstall all packages
+stow -D */
+
+# Or uninstall specific packages
+stow -D ssh zsh
 ```
+
+## Notes
+
+- The SSH package only symlinks the `config` file, not the entire `.ssh` directory
+- Files like `known_hosts` will stay in `~/.ssh/` and won't appear in this repository
+- Each package can be installed/uninstalled independently
