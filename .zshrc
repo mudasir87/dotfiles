@@ -6,6 +6,7 @@ source "${ZINIT_HOME}/zinit.zsh"
 
 # --- Paths ---
 export PATH="$HOME/.local/bin:/Users/muddassir/.codeium/windsurf/bin:$PATH"
+export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 
 # --- Plugins ---
 zinit light zsh-users/zsh-syntax-highlighting
