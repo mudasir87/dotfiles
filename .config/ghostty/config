@@ -1,0 +1,5 @@
+font-family = "JetBrainsMono Nerd Font Mono"
+font-size = 19
+theme = "Atom One Dark"
+font-thicken = true
+font-thicken-strength = 100

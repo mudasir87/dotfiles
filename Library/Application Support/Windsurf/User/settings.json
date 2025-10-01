@@ -1,0 +1,60 @@
+{
+  // Theme & Appearance
+  "workbench.colorTheme": "Catppuccin Frappé",
+  "workbench.iconTheme": "catppuccin-frappe",
+  "window.zoomLevel": 1,
+  "window.titleBarStyle": "custom",
+  "workbench.activityBar.location": "top",
+  // "workbench.sideBar.location": "right",
+  "workbench.startupEditor": "none",
+  "workbench.tips.enabled": false,
+  // "workbench.statusBar.visible": false,
+  "workbench.layoutControl.enabled": false,
+  "workbench.editor.editorActionsLocation": "hidden",
+  "workbench.editor.showTabs": "none",
+
+  // Editor: Fonts & Layout
+  "editor.fontFamily": "JetBrains Mono, Fira Code",
+  "editor.fontSize": 16,
+  "editor.fontWeight": "600",
+  "editor.fontLigatures": true,
+  "editor.lineHeight": 2,
+  "editor.wordWrap": "on",
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.minimap.enabled": false,
+  "editor.renderWhitespace": "none",
+  "editor.renderControlCharacters": false,
+  "editor.scrollbar.verticalScrollbarSize": 5,
+  "editor.scrollbar.horizontalScrollbarSize": 5,
+  "editor.scrollbar.showDecorations": true,
+
+  // Editor: Token & Syntax Customizations
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "comment",
+        "settings": {
+          "fontStyle": "italic"
+        }
+      }
+    ]
+  },
+
+  // Explorer & Tree
+  "breadcrumbs.enabled": false,
+  "workbench.tree.renderIndentGuides": "none",
+  "workbench.tree.indent": 12,
+  "explorer.compactFolders": false,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+
+  // Performance & Productivity
+  "editor.tabCompletion": "on",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "extensions.ignoreRecommendations": true,
+
+  // Security & Trust
+  "security.workspace.trust.untrustedFiles": "open"
+}
