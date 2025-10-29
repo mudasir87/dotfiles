@@ -5,3 +5,5 @@
 --ignore=^\.stowrc
 --ignore=^README\.md
 --ignore=\.DS_Store
+--ignore=^macos
+--ignore=^setup\.sh

@@ -11,15 +11,30 @@ if ! xcode-select -p &>/dev/null; then
   until xcode-select -p &>/dev/null; do sleep 5; done
 fi
 
-# --- Install Homebrew ---
+# --- Install Homebrew (universal for Intel + Apple Silicon) ---
 if ! command -v brew &>/dev/null; then
   echo "🍺 Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-else
-  echo "✅ Homebrew already installed."
 fi
+
+# Detect architecture and set Homebrew prefix
+ARCH=$(uname -m)
+if [[ "$ARCH" == "arm64" ]]; then
+  BREW_PREFIX="/opt/homebrew"
+else
+  BREW_PREFIX="/usr/local"
+fi
+
+# Add Homebrew to shell profile if not already added
+if ! grep -q "$BREW_PREFIX/bin/brew shellenv" ~/.zprofile 2>/dev/null; then
+  echo "🔧 Adding Homebrew to PATH in ~/.zprofile"
+  echo "eval \"\$($BREW_PREFIX/bin/brew shellenv)\"" >> ~/.zprofile
+fi
+
+# Load for current session
+eval "$($BREW_PREFIX/bin/brew shellenv)"
+
+echo "✅ Homebrew initialized from: $BREW_PREFIX"
 
 # --- Update & basic tools ---
 brew update
@@ -30,12 +45,11 @@ brew install stow starship fzf eza zoxide
 
 # --- Fonts ---
 echo "🔤 Installing developer fonts..."
-brew tap homebrew/cask-fonts
 brew install --cask font-jetbrains-mono
 brew install --cask font-cascadia-code
 brew install --cask font-fira-code
 brew install --cask font-jetbrains-mono-nerd-font
-brew install --cask font-cascadia-code-nerd-font
+brew install --cask font-cascadia-code-nf
 brew install --cask font-fira-code-nerd-font
 
 # --- Apps ---
@@ -44,7 +58,7 @@ brew install --cask \
   google-chrome \
   spotify \
   whatsapp \
-  microsoft-office \
+  microsoft-office-businesspro \
   1password \
   nordvpn \
   maccy
@@ -58,31 +72,22 @@ brew install --cask ghostty
 brew cleanup
 
 # --- Apply macOS Defaults ---
-echo "⚙️ Applying macOS system settings..."
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ -f "$SCRIPT_DIR/macos/macos-defaults.sh" ]]; then
+  bash "$SCRIPT_DIR/macos/macos-defaults.sh"
+else
+  echo "⚠️  macOS defaults script not found, skipping..."
+fi
 
-## Finder
-defaults write com.apple.finder AppleShowAllFiles -bool true
-defaults write com.apple.finder ShowStatusBar -bool true
-defaults write com.apple.finder ShowPathbar -bool true
-defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
-defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
-defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+# --- Deploy Dotfiles with Stow ---
+echo "🔗 Deploying dotfiles with Stow..."
 
-## Dock
-defaults write com.apple.dock autohide -bool true
-defaults write com.apple.dock minimize-to-application -bool true
-defaults write com.apple.dock show-recents -bool false
-defaults write com.apple.dock tilesize -int 42
+# Create SSH directory (required for proper file-level symlinking)
+mkdir -p ~/.ssh && chmod 700 ~/.ssh
 
-## Keyboard & Trackpad
-defaults write -g KeyRepeat -int 1
-defaults write -g InitialKeyRepeat -int 15
-defaults write -g ApplePressAndHoldEnabled -bool false
-
-## Apply
-killall Finder &>/dev/null || true
-killall Dock &>/dev/null || true
-killall SystemUIServer &>/dev/null || true
+# Stow all packages (stow will automatically ignore files listed in .stowrc)
+cd "$SCRIPT_DIR"
+stow */
 
 echo "✅ macOS setup complete!"
 echo "🔁 Please log out or restart to apply all settings."
