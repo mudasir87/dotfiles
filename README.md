@@ -6,7 +6,6 @@ Personal macOS configuration files managed with [GNU Stow](https://www.gnu.org/s
 
 This repository uses a **package-based structure** where each tool has its own directory:
 
-- `ssh/` - SSH client configuration
 - `zsh/` - Zsh shell configuration
 - `starship/` - Starship prompt configuration
 - `ghostty/` - Ghostty terminal configuration
@@ -48,22 +47,17 @@ If you already have the required tools installed and only want to symlink dotfil
    brew install stow starship fzf eza zoxide
    ```
 
-3. **Create SSH directory** (required for proper file-level symlinking):
-   ```bash
-   mkdir -p ~/.ssh && chmod 700 ~/.ssh
-   ```
-
-4. **Deploy all packages**:
+3. **Deploy all packages**:
    ```bash
    stow */
    ```
 
    Or install specific packages:
    ```bash
-   stow ssh zsh starship ghostty windsurf
+   stow zsh starship ghostty windsurf
    ```
 
-5. **Restart your shell**:
+4. **Restart your shell**:
    ```bash
    source ~/.zshrc
    ```
@@ -92,5 +86,5 @@ cd ~/dotfiles
 stow -D */
 
 # Or uninstall specific packages
-stow -D ssh zsh
+stow -D zsh starship
 ```

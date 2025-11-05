@@ -82,9 +82,6 @@ fi
 # --- Deploy Dotfiles with Stow ---
 echo "🔗 Deploying dotfiles with Stow..."
 
-# Create SSH directory (required for proper file-level symlinking)
-mkdir -p ~/.ssh && chmod 700 ~/.ssh
-
 # Stow all packages (stow will automatically ignore files listed in .stowrc)
 cd "$SCRIPT_DIR"
 stow */
